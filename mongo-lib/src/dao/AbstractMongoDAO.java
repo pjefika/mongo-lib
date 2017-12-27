@@ -39,7 +39,8 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
         return datastore;
     }
 
-    public UpdateOperations<T> createOperations() {
+    @Override
+    public UpdateOperations<T> createUpdateOperations() {
         return getDatastore().createUpdateOperations(typeParameterClass);
     }
 
@@ -50,8 +51,8 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     }
 
     @Override
-    public T update(T t) throws Exception {
-        return (T) getDatastore().update(t, createOperations());
+    public T update(T t, UpdateOperations<T> opers) throws Exception {
+        return (T) getDatastore().update(t, opers);
     }
 
     @Override

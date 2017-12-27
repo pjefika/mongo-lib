@@ -6,7 +6,7 @@
 package dao;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Key;
+import org.mongodb.morphia.query.UpdateOperations;
 
 /**
  *
@@ -17,10 +17,12 @@ public interface GenericDAO<T> {
 
     public T save(T t) throws Exception;
 
-    public T update(T t) throws Exception;
+    public T update(T t, UpdateOperations<T> opers) throws Exception;
 
     public void delete(T t) throws Exception;
 
     public T read(ObjectId id) throws Exception;
+
+    public UpdateOperations<T> createUpdateOperations();
 
 }
