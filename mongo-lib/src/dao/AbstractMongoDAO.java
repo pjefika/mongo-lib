@@ -8,7 +8,6 @@ package dao;
 import com.mongodb.MongoClient;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.UpdateOperations;
 
@@ -63,6 +62,14 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     @Override
     public T read(ObjectId id) throws Exception {
         return getDatastore().get(typeParameterClass, id);
+    }
+
+    public Morphia getMorphia() {
+        return morphia;
+    }
+
+    public Class<T> getTypeParameterClass() {
+        return typeParameterClass;
     }
 
 }
