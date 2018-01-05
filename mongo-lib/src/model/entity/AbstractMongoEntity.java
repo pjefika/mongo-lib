@@ -5,6 +5,8 @@
  */
 package model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
@@ -15,6 +17,7 @@ import org.mongodb.morphia.annotations.Id;
 public abstract class AbstractMongoEntity {
 
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
     public AbstractMongoEntity() {
