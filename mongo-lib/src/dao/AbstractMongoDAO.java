@@ -20,7 +20,7 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
     private final Morphia morphia = new Morphia();
 
-    private Datastore datastore;
+    private static Datastore datastore;
 
     private final String ipAddress, dbName;
 
