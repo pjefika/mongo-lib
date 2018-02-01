@@ -6,6 +6,7 @@
 package dao;
 
 import com.mongodb.MongoClient;
+import dao.converter.BigIntegerConverter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -30,6 +31,9 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
         this.ipAddress = ipAddress;
         this.dbName = dbName;
         this.typeParameterClass = typeParameterClass;
+        morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
+
+
     }
 
     public Datastore getDatastore() {
