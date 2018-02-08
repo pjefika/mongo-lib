@@ -5,7 +5,8 @@
  */
 package dao;
 
-import model.entity.MongoEntityTest;
+import br.net.gvt.efika.mongo.dao.MongoEntityTestImpl;
+import br.net.gvt.efika.mongo.model.entity.MongoEntityTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

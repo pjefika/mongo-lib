@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.converter;
+package br.net.gvt.efika.mongo.dao.converter;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -17,6 +17,8 @@ import org.mongodb.morphia.mapping.MappingException;
  *
  * @author G0041775
  */
+
+
 public class BigIntegerConverter extends TypeConverter implements SimpleValueConverter {
 
     public BigIntegerConverter() {

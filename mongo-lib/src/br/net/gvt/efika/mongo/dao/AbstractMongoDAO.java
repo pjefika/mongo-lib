@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.net.gvt.efika.mongo.dao;
 
 import com.mongodb.MongoClient;
-import dao.converter.BigIntegerConverter;
+import br.net.gvt.efika.mongo.dao.converter.BigIntegerConverter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -19,26 +19,21 @@ import org.mongodb.morphia.query.UpdateOperations;
  */
 public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
-    private final Morphia morphia = new Morphia();
-
     private static Datastore datastore;
 
     private final String ipAddress, dbName;
 
-    final Class<T> typeParameterClass;
+    private final Class<T> typeParameterClass;
 
     public AbstractMongoDAO(String ipAddress, String dbName, Class<T> typeParameterClass) {
         this.ipAddress = ipAddress;
         this.dbName = dbName;
         this.typeParameterClass = typeParameterClass;
-        morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
-
-
     }
 
     public Datastore getDatastore() {
         if (datastore == null) {
-            datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
+            datastore = MorphiaSingleton.getInstance().getMorphia().createDatastore(new MongoClient(ipAddress), dbName);
         }
         return datastore;
     }
@@ -67,10 +62,6 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     @Override
     public T read(ObjectId id) throws Exception {
         return getDatastore().get(typeParameterClass, id);
-    }
-
-    public Morphia getMorphia() {
-        return morphia;
     }
 
     public Class<T> getTypeParameterClass() {

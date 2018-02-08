@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.net.gvt.efika.mongo.dao;
 
-import model.entity.MongoEntityTest;
+import br.net.gvt.efika.mongo.model.entity.MongoEntityTest;
 
 public class MongoEntityTestImpl extends AbstractMongoDAO<MongoEntityTest> {
 

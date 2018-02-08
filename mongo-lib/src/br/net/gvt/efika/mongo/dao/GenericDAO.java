@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package br.net.gvt.efika.mongo.dao;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.UpdateOperations;
