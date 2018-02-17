@@ -6,10 +6,8 @@
 package br.net.gvt.efika.mongo.dao;
 
 import com.mongodb.MongoClient;
-import br.net.gvt.efika.mongo.dao.converter.BigIntegerConverter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.UpdateOperations;
 
 /**
