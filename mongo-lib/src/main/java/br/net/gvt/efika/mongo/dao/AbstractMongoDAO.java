@@ -8,6 +8,7 @@ package br.net.gvt.efika.mongo.dao;
 import com.mongodb.MongoClient;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.UpdateOperations;
 
 /**
@@ -17,22 +18,18 @@ import org.mongodb.morphia.query.UpdateOperations;
  */
 public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
-    private static Datastore datastore;
+    private Morphia morphia;
 
-    private final String ipAddress, dbName;
+    private Datastore datastore;
 
     private final Class<T> typeParameterClass;
 
     public AbstractMongoDAO(String ipAddress, String dbName, Class<T> typeParameterClass) {
-        this.ipAddress = ipAddress;
-        this.dbName = dbName;
         this.typeParameterClass = typeParameterClass;
+        datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
     }
 
     public Datastore getDatastore() {
-        if (datastore == null) {
-            datastore = MorphiaSingleton.getInstance().getMorphia().createDatastore(new MongoClient(ipAddress), dbName);
-        }
         return datastore;
     }
 
@@ -60,6 +57,10 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     @Override
     public T read(ObjectId id) throws Exception {
         return getDatastore().get(typeParameterClass, id);
+    }
+
+    public Morphia getMorphia() {
+        return morphia;
     }
 
     public Class<T> getTypeParameterClass() {
