@@ -18,11 +18,11 @@ import org.mongodb.morphia.query.UpdateOperations;
  */
 public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
-    private final Morphia morphia = new Morphia();
+    private Morphia morphia = new Morphia();
 
-    private static Datastore datastore;
+    private Datastore datastore;
 
-    private final String ipAddress, dbName;
+    private String ipAddress, dbName;
 
     final Class<T> typeParameterClass;
 
