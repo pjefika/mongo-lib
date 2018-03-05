@@ -19,13 +19,10 @@ import org.mongodb.morphia.query.UpdateOperations;
  */
 public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
-    private Morphia morphia = new Morphia();
-
-    private Datastore datastore;
-
-    private String ipAddress, dbName;
-
-    final Class<T> typeParameterClass;
+    private static Datastore datastore;
+    private final String ipAddress;
+    private final String dbName;
+    private final Class<T> typeParameterClass;
 
     public AbstractMongoDAO(String ipAddress, String dbName, Class<T> typeParameterClass) {
         this.ipAddress = ipAddress;
@@ -35,6 +32,7 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
     public Datastore getDatastore() {
         if (datastore == null) {
+            Morphia morphia = new Morphia();
             morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
             datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
         }
@@ -65,10 +63,6 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     @Override
     public T read(ObjectId id) throws Exception {
         return getDatastore().get(typeParameterClass, id);
-    }
-
-    public Morphia getMorphia() {
-        return morphia;
     }
 
     public Class<T> getTypeParameterClass() {
