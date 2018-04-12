@@ -23,6 +23,7 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     private final String ipAddress;
     private final String dbName;
     private final Class<T> typeParameterClass;
+    private Morphia morphia;
 
     public AbstractMongoDAO(String ipAddress, String dbName, Class<T> typeParameterClass) {
         this.ipAddress = ipAddress;
@@ -31,11 +32,11 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     }
 
     public Datastore getDatastore() {
-        if (datastore == null) {
-            Morphia morphia = new Morphia();
+        if (morphia == null) {
+            morphia = new Morphia();
             morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
-            datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
         }
+        datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
         return datastore;
     }
 
