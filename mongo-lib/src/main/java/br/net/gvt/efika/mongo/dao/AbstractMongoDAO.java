@@ -32,45 +32,48 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
     }
 
     public Datastore getDatastore() {
-        if (morphia == null) {
-            morphia = new Morphia();
+        if (datastore == null) {
+            
+            Morphia morphia = new Morphia();
             morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
+            datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
         }
-        datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
+        
+        
         return datastore;
     }
 
     @Override
     public UpdateOperations<T> createUpdateOperations() {
         UpdateOperations<T> u = getDatastore().createUpdateOperations(typeParameterClass);
-        getDatastore().getMongo().close();
+//        getDatastore().getMongo().close();
         return u;
     }
 
     @Override
     public T save(T t) throws Exception {
         getDatastore().save(t);
-        getDatastore().getMongo().close();
+//        getDatastore().getMongo().close();
         return t;
     }
 
     @Override
     public T update(T t, UpdateOperations<T> opers) throws Exception {
         T res = (T) getDatastore().update(t, opers);
-        getDatastore().getMongo().close();
+//        getDatastore().getMongo().close();
         return res;
     }
 
     @Override
     public void delete(T t) throws Exception {
         getDatastore().delete(t);
-        getDatastore().getMongo().close();
+//        getDatastore().getMongo().close();
     }
 
     @Override
     public T read(ObjectId id) throws Exception {
         T res = getDatastore().get(typeParameterClass, id);
-        getDatastore().getMongo().close();
+//        getDatastore().getMongo().close();
         return res;
     }
 
