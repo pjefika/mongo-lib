@@ -41,28 +41,36 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
     @Override
     public UpdateOperations<T> createUpdateOperations() {
-        return getDatastore().createUpdateOperations(typeParameterClass);
+        UpdateOperations<T> u = getDatastore().createUpdateOperations(typeParameterClass);
+        getDatastore().getMongo().close();
+        return u;
     }
 
     @Override
     public T save(T t) throws Exception {
         getDatastore().save(t);
+        getDatastore().getMongo().close();
         return t;
     }
 
     @Override
     public T update(T t, UpdateOperations<T> opers) throws Exception {
-        return (T) getDatastore().update(t, opers);
+        T res = (T) getDatastore().update(t, opers);
+        getDatastore().getMongo().close();
+        return res;
     }
 
     @Override
     public void delete(T t) throws Exception {
         getDatastore().delete(t);
+        getDatastore().getMongo().close();
     }
 
     @Override
     public T read(ObjectId id) throws Exception {
-        return getDatastore().get(typeParameterClass, id);
+        T res = getDatastore().get(typeParameterClass, id);
+        getDatastore().getMongo().close();
+        return res;
     }
 
     public Class<T> getTypeParameterClass() {
