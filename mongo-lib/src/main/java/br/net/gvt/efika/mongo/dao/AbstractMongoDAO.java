@@ -7,6 +7,7 @@ package br.net.gvt.efika.mongo.dao;
 
 import br.net.gvt.efika.mongo.dao.converter.BigIntegerConverter;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -33,12 +34,12 @@ public abstract class AbstractMongoDAO<T> implements GenericDAO<T> {
 
     public Datastore getDatastore() {
         if (datastore == null) {
-            
+            MongoClientOptions mongoClientOptions = new MongoClientOptions.Builder().connectionsPerHost(10000).build();
             Morphia morphia = new Morphia();
             morphia.getMapper().getConverters().addConverter(BigIntegerConverter.class);
-            datastore = morphia.createDatastore(new MongoClient(ipAddress), dbName);
+            datastore = morphia.createDatastore(new MongoClient(ipAddress, mongoClientOptions), dbName);
         }
-        
+
         
         return datastore;
     }
