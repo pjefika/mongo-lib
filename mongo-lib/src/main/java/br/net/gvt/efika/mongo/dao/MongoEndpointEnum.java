@@ -11,8 +11,10 @@ package br.net.gvt.efika.mongo.dao;
  */
 public enum MongoEndpointEnum {
 
-    MONGO("10.200.35.67");
+//    MONGO("10.200.35.67");
+    MONGO("10.129.166.141");
 //    MONGO("10.40.197.137");
+//    MONGO("10.41.22.140");
 
     private final String ip;
 
